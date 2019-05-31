@@ -43,3 +43,4 @@ list1
 list1$name <- c('Seo','James')
 list1
 list1$birth <- NULL   #list 삭제
+rm(list=ls())
