@@ -3,8 +3,8 @@ library("reshape2")
 
 fruits
 
-melt(Fruits, id='Year')
-melt(Fruits, id=c('Year', 'Fruit'))
+melt(fruits, id='year')
+melt(fruits, id=c('year', 'name'))
 
 install.packages('stringr')
 library(stringr)
