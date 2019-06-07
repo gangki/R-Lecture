@@ -129,5 +129,17 @@ getDenominator <- function(x) {
 }
 getDenominator(3)
 
+# for loop 추가
 
+sum <- 0
+for (i in seq(3, 100, 3)) {
+  sum <- sum + i
+}
+print(sum)
+
+sum <- 0
+for (i in seq(1, 0, 1)) {
+  sum <- sum + i
+}
+print(i)
 
