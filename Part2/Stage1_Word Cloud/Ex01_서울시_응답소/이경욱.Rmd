@@ -1,0 +1,292 @@
+```{r}
+# 서울시 응답소 2015년 데이터에서 중요한 키워드를 찾아 워드 클라우드를 만드시오.
+# 단, 다음의 조건을 충족시켜야 함.
+# 1. 제거해야할 단어를 저장한 gsub 파일을 만들 것
+# 2. stringr 패키지를 사용할 것
+# 3. R Markdown 보고서를 만들어서 제출할 것
+
+setwd("D:/Workspace/R-Lecture/Part2/Stage1_Word Cloud/연습문제_2015 서울시 응답소")
+library(KoNLP)  # 필수 패키지 로딩
+library(wordcloud) # 필수 패키지 로딩
+useSejongDic( ) 
+library(stringr)
+library(RColorBrewer) 
+
+txt1 <- readLines("응답소_2015_01.txt")
+txt2 <- readLines("응답소_2015_02.txt")
+txt3 <- readLines("응답소_2015_03.txt")
+txt4 <- readLines("응답소_2015_04.txt")
+txt5 <- readLines("응답소_2015_05.txt")
+txt6 <- readLines("응답소_2015_06.txt")
+txt7 <- readLines("응답소_2015_07.txt")
+txt8 <- readLines("응답소_2015_08.txt")
+txt9 <- readLines("응답소_2015_09.txt")
+txt10 <- readLines("응답소_2015_10.txt")
+txt11 <- readLines("응답소_2015_11.txt")
+txt12 <- readLines("응답소_2015_12.txt")
+
+data1 <- sapply(txt1, extractNoun, USE.NAMES = F)
+data2 <- sapply(txt2, extractNoun, USE.NAMES = F)
+data3 <- sapply(txt3, extractNoun, USE.NAMES = F)
+data4 <- sapply(txt4, extractNoun, USE.NAMES = F)
+data5 <- sapply(txt5, extractNoun, USE.NAMES = F)
+data6 <- sapply(txt6, extractNoun, USE.NAMES = F)
+data7 <- sapply(txt7, extractNoun, USE.NAMES = F)
+data8 <- sapply(txt8, extractNoun, USE.NAMES = F)
+data9 <- sapply(txt9, extractNoun, USE.NAMES = F)
+data10 <- sapply(txt10, extractNoun, USE.NAMES = F)
+data11 <- sapply(txt11, extractNoun, USE.NAMES = F)
+data12 <- sapply(txt12, extractNoun, USE.NAMES = F)
+
+head(unlist(data1), 30)
+head(unlist(data2), 30)
+head(unlist(data3), 30)
+head(unlist(data4), 30)
+head(unlist(data5), 30)
+head(unlist(data6), 30)
+head(unlist(data7), 30)
+head(unlist(data8), 30)
+head(unlist(data9), 30)
+head(unlist(data10), 30)
+head(unlist(data11), 30)
+head(unlist(data12), 30)
+
+cdata1 <- unlist(data1)
+cdata2 <- unlist(data2)
+cdata3 <- unlist(data3)
+cdata4 <- unlist(data4)
+cdata5 <- unlist(data5)
+cdata6 <- unlist(data6)
+cdata7 <- unlist(data7)
+cdata8 <- unlist(data8)
+cdata9 <- unlist(data9)
+cdata10 <- unlist(data10)
+cdata11 <- unlist(data11)
+cdata12 <- unlist(data12)
+
+data1 <- str_replace_all(cdata1,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data2 <- str_replace_all(cdata2,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data3 <- str_replace_all(cdata3,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data4 <- str_replace_all(cdata4,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data5 <- str_replace_all(cdata5,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data6 <- str_replace_all(cdata6,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data7 <- str_replace_all(cdata7,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data8 <- str_replace_all(cdata8,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data9 <- str_replace_all(cdata9,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data10 <- str_replace_all(cdata10,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data11 <- str_replace_all(cdata11,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+data12 <- str_replace_all(cdata12,"[^[:alpha:]]","") # --한글, 영어 외는 삭제
+
+data1 <- gsub(" ","", data1)
+data1 <- Filter(function(x) {nchar(x) >= 2} ,data1)
+data2 <- gsub(" ","", data2)
+data2 <- Filter(function(x) {nchar(x) >= 2} ,data2)
+data3 <- gsub(" ","", data3)
+data3 <- Filter(function(x) {nchar(x) >= 2} ,data3)
+data4 <- gsub(" ","", data4)
+data4 <- Filter(function(x) {nchar(x) >= 2} ,data4)
+data5 <- gsub(" ","", data5)
+data5 <- Filter(function(x) {nchar(x) >= 2} ,data5)
+data6 <- gsub(" ","", data6)
+data6 <- Filter(function(x) {nchar(x) >= 2} ,data6)
+data7 <- gsub(" ","", data7)
+data7 <- Filter(function(x) {nchar(x) >= 2} ,data7)
+data8 <- gsub(" ","", data8)
+data8 <- Filter(function(x) {nchar(x) >= 2} ,data8)
+data9 <- gsub(" ","", data9)
+data9 <- Filter(function(x) {nchar(x) >= 2} ,data9)
+data10 <- gsub(" ","", data10)
+data10 <- Filter(function(x) {nchar(x) >= 2} ,data10)
+data11 <- gsub(" ","", data11)
+data11 <- Filter(function(x) {nchar(x) >= 2} ,data11)
+data12 <- gsub(" ","", data12)
+data12 <- Filter(function(x) {nchar(x) >= 2} ,data12)
+
+txt <- readLines("2015서울시응답소gsub.txt")
+i <- 1
+for(i in 1 : length(txt)) {
+  data1 <- gsub((txt[i]), "", data1)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data2 <- gsub((txt[i]), "", data2)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data3 <- gsub((txt[i]), "", data3)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data4 <- gsub((txt[i]), "", data4)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data5 <- gsub((txt[i]), "", data5)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data6 <- gsub((txt[i]), "", data6)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data7 <- gsub((txt[i]), "", data7)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data8 <- gsub((txt[i]), "", data8)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data9 <- gsub((txt[i]), "", data9)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data10 <- gsub((txt[i]), "", data10)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data11 <- gsub((txt[i]), "", data11)
+}
+i <- 1
+for(i in 1 : length(txt)) {
+  data12 <- gsub((txt[i]), "", data12)
+}
+
+
+wordcount1 <- table(data1)
+head(sort(wordcount1, decreasing=T),20)
+wordcount2 <- table(data2)
+head(sort(wordcount2, decreasing=T),20)
+wordcount3 <- table(data3)
+head(sort(wordcount3, decreasing=T),20)
+wordcount4 <- table(data4)
+head(sort(wordcount4, decreasing=T),20)
+wordcount5 <- table(data5)
+head(sort(wordcount5, decreasing=T),20)
+wordcount6 <- table(data6)
+head(sort(wordcount6, decreasing=T),20)
+wordcount7 <- table(data7)
+head(sort(wordcount7, decreasing=T),20)
+wordcount8 <- table(data8)
+head(sort(wordcount8, decreasing=T),20)
+wordcount9 <- table(data9)
+head(sort(wordcount9, decreasing=T),20)
+wordcount10 <- table(data10)
+head(sort(wordcount10, decreasing=T),20)
+wordcount11 <- table(data11)
+head(sort(wordcount11, decreasing=T),20)
+wordcount12 <- table(data12)
+head(sort(wordcount12, decreasing=T),20)
+
+write(unlist(data1), "응답소_2015_01_1.txt")
+seoul1 <- read.table("응답소_2015_01_1.txt")
+write(unlist(data2), "응답소_2015_01_2.txt")
+seoul2 <- read.table("응답소_2015_01_2.txt")
+write(unlist(data3), "응답소_2015_01_3.txt")
+seoul3 <- read.table("응답소_2015_01_3.txt")
+write(unlist(data4), "응답소_2015_01_4.txt")
+seoul4 <- read.table("응답소_2015_01_4.txt")
+write(unlist(data5), "응답소_2015_01_5.txt")
+seoul5 <- read.table("응답소_2015_01_5.txt")
+write(unlist(data6), "응답소_2015_01_6.txt")
+seoul6 <- read.table("응답소_2015_01_6.txt")
+write(unlist(data7), "응답소_2015_01_7.txt")
+seoul7 <- read.table("응답소_2015_01_7.txt")
+write(unlist(data8), "응답소_2015_01_8.txt")
+seoul8 <- read.table("응답소_2015_01_8.txt")
+write(unlist(data9), "응답소_2015_01_9.txt")
+seoul9 <- read.table("응답소_2015_01_9.txt")
+write(unlist(data10), "응답소_2015_01_10.txt")
+seoul10 <- read.table("응답소_2015_01_10.txt")
+write(unlist(data11), "응답소_2015_01_11.txt")
+seoul11 <- read.table("응답소_2015_01_11.txt")
+write(unlist(data12), "응답소_2015_01_12.txt")
+seoul12 <- read.table("응답소_2015_01_12.txt")
+
+wc_seoul1 <- table(seoul1)
+head(sort(wc_seoul1, decreasing=T),20)
+wc_seoul2 <- table(seoul2)
+head(sort(wc_seoul2, decreasing=T),20)
+wc_seoul3 <- table(seoul3)
+head(sort(wc_seoul3, decreasing=T),20)
+wc_seoul4 <- table(seoul4)
+head(sort(wc_seoul4, decreasing=T),20)
+wc_seoul5 <- table(seoul5)
+head(sort(wc_seoul5, decreasing=T),20)
+wc_seoul6 <- table(seoul6)
+head(sort(wc_seoul6, decreasing=T),20)
+wc_seoul7 <- table(seoul7)
+head(sort(wc_seoul7, decreasing=T),20)
+wc_seoul8 <- table(seoul8)
+head(sort(wc_seoul8, decreasing=T),20)
+wc_seoul9 <- table(seoul9)
+head(sort(wc_seoul9, decreasing=T),20)
+wc_seoul10 <- table(seoul10)
+head(sort(wc_seoul10, decreasing=T),20)
+wc_seoul11 <- table(seoul11)
+head(sort(wc_seoul11, decreasing=T),20)
+wc_seoul12 <- table(seoul12)
+head(sort(wc_seoul12, decreasing=T),20)
+
+palete <- brewer.pal(9, "Set1")
+wordcloud(names(wc_seoul1), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"1월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       
+       text.col="red",text.font=2,box.col="red")
+wordcloud(names(wc_seoul2), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"2월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul3), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"3월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul4), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"4월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul1), freq = wc_seoul5, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"5월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul1), freq = wc_seoul6, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"6월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul7), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"7월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul8), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"8월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul9), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"9월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul10), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"10월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul11), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"11월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+wordcloud(names(wc_seoul12), freq = wc_seoul1, scale = c(5,0.25), rot.per = 0.25,
+          min.freq = 2, max.words = 200, random.order = F, random.color = T, colors = palete)
+legend(0.3,1 ,"12월 서울시 응답소 키워드",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+```
+
