@@ -1,0 +1,70 @@
+```{r}
+# 미션 3-3. 취직하기가 정말 어렵네요
+
+setwd("D:/Workspace/R-Lecture/Part2/Stage3_StructureData/도전미션 3-3 - 취직하기가 정말 어렵네요")
+library(ggplot2)
+library(reshape2)
+
+data1 <- read.csv("2000-2013년 연령별실업율_연령별평균_세로.csv")
+long_data1 <- melt(data1, id = c("연도"), variable.name = "연령", value.name = "실업률")
+head(long_data1, 10)
+class(long_data1)
+
+ggplot(long_data1, aes(x=연도, y=실업률, group =연령, color = 연령)) +
+  geom_line() +
+  geom_point(size=3) +
+  labs(title = "연령별 실업률 현황(단위:%) 출처:통계청") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title=element_text(face="bold", size=20, color="blue")) +
+  scale_y_continuous(breaks=seq(0, 10, 1))
+
+# 미션 3-4. 정규직은 정녕 꿈인가요
+
+setwd("D:/Workspace/R-Lecture/Part2/Stage3_StructureData/도전미션 3-4 - 정규직은 정녕 꿈인가요")
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+
+
+data1 <- read.csv("고용형태별_취업자현황_2007_2013년.csv", skip = 1, header = T)
+data_1 <- select(data1, 고용형태, contains('일'))
+data_2 <- data_1[-c(2,5,6),]
+names(data_2)
+names(data_2) <- c("고용형태","2007","2008","2009","2010","2011","2012","2013")
+long_data1 <- melt(data_2, id = c("고용형태"), variable.name = "연도", value.name = "근무일수")
+str(data1)
+
+ggplot(long_data1, aes(x=연도, y=근무일수, group = 고용형태, color = 고용형태)) +
+  geom_line() +
+  geom_point(size=3) +
+  labs(title = "고용형태별 근무일수(단위:일 출처: 통계청") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title=element_text(face="bold", size=10, color="blue"))
+
+# 미션 3-6. 콩나물 마을 버스 찾아 달래요
+
+setwd("D:/Workspace/R-Lecture/Part2/Stage3_StructureData/도전미션 3-6 - 콩나물 마을 버스 찾아 달래요")
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+library(RColorBrewer)
+
+data <- read.csv("버스노선별이용현황합계.csv")
+long_data <- melt(data, id = c('버스노선번호'), variable.name = "승하차", value.name = "이용승객수")
+long_data$이용승객수 <- long_data$이용승객수/1000
+long_data <- arrange(long_data, 버스노선번호)
+
+long_data <- long_data %>%
+  mutate(탑승객 = 이용승객수 * 1000) %>%
+  mutate(ypos = 이용승객수 * 0.9)
+
+ggplot(long_data, aes(x=버스노선번호, y=이용승객수, group = 승하차, color = 승하차)) +
+         geom_bar(position = 'dodge', stat='identity', width=0.4) +
+         ggtitle("서울 주요 마을 버스 이용 승객 현황 (2014년 1월)") +
+         theme(plot.title = element_text(hjust = 0.5)) +
+         theme(plot.title=element_text(face="bold", size=10, color="blue")) +
+         geom_text(aes(y=ypos, label=탑승객), color = 'red')
+```
+

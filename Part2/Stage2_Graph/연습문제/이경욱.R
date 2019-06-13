@@ -38,7 +38,7 @@ corp2 <- tm_map(corp2, tolower)
 corp2 <- tm_map(corp2, removeNumbers) 
 corp2 <- tm_map(corp2, removePunctuation) 
 corp2 <- tm_map(corp2, PlainTextDocument) 
-sword2 <- c(stopwords('en'), "and", "but", "not", "’m", "’re", "em", "ma", "don", "toda", "gir", "ban", "ba", "wa", "da", "bab", "tha", "worl","wron", "fl") 
+sword2 <- c(stopwords('en'), "and", "but", "not", "’m", "’re", "em", "ma", "don", "toda", "gir", "ban", "ba", "wa", "da", "bab", "tha", "worl","wron", "fl", "yah") 
 corp2 <- tm_map(corp2, removeWords, sword2) 
 
 dataframe <- data.frame(text=unlist(sapply(corp2, `[`, "content")), stringsAsFactors=F)
